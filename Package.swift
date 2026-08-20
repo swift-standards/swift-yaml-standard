@@ -1,15 +1,15 @@
-// swift-tools-version: 6.3.3
+// swift-tools-version: 6.4
 
 import PackageDescription
 
 let package = Package(
     name: "swift-yaml-standard",
     platforms: [
-        .macOS("27"),
-        .iOS("27"),
-        .tvOS("27"),
-        .watchOS("27"),
-        .visionOS("27")
+        .macOS(.v27),
+        .iOS(.v27),
+        .tvOS(.v27),
+        .watchOS(.v27),
+        .visionOS(.v27),
     ],
     products: [
         .library(name: "YAML Standard", targets: ["YAML Standard"])
@@ -22,14 +22,14 @@ let package = Package(
         .package(
             url: "https://github.com/swift-primitives/swift-lexer-primitives.git",
             branch: "main"
-        )
+        ),
     ],
     targets: [
         .target(
             name: "YAML Standard",
             dependencies: [
                 .product(name: "Graph Sequential Primitives", package: "swift-graph-primitives"),
-                .product(name: "Lexer Primitives", package: "swift-lexer-primitives")
+                .product(name: "Lexer Primitives", package: "swift-lexer-primitives"),
             ],
             path: "Sources/YAML Standard"
         ),
@@ -37,7 +37,7 @@ let package = Package(
             name: "YAML Standard Tests",
             dependencies: [.target(name: "YAML Standard")],
             path: "Tests/YAML Standard Tests"
-        )
+        ),
     ],
     swiftLanguageModes: [.v6]
 )
@@ -51,6 +51,6 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
             .enableUpcomingFeature("MemberImportVisibility"),
             .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
             .enableExperimentalFeature("SuppressedAssociatedTypes"),
-            .enableUpcomingFeature("InferIsolatedConformances")
+            .enableUpcomingFeature("InferIsolatedConformances"),
         ]
 }
