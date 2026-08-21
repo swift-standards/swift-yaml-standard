@@ -1,5 +1,3 @@
-// Licensed under Apache License v2.0.
-
 extension YAML.Representation {
     @frozen
     public struct Node: Sendable, Equatable {

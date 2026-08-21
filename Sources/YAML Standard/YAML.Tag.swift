@@ -1,5 +1,3 @@
-// Licensed under Apache License v2.0.
-
 extension YAML {
     @frozen
     public enum Tag: Sendable, Equatable, Hashable {

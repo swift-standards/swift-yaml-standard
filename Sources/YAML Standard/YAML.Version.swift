@@ -1,5 +1,3 @@
-// Licensed under Apache License v2.0.
-
 extension YAML {
     @frozen
     public struct Version: Sendable, Equatable, Hashable {
