@@ -1,4 +1,4 @@
-public import Lexer_Primitives
+public import Lexer
 
 extension YAML.Serialization {
     @frozen

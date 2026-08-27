@@ -1,4 +1,4 @@
-private import Graph_Sequential_Primitives
+private import Graph_Sequential
 
 extension YAML.Representation.Node.Identifier {
     package func isValid<Element>(in elements: [Element]) -> Bool {

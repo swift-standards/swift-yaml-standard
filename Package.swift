@@ -16,11 +16,11 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-graph-primitives.git",
+            url: "https://github.com/swift-molecules/swift-graph.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-lexer-primitives.git",
+            url: "https://github.com/swift-molecules/swift-lexer.git",
             branch: "main"
         ),
     ],
@@ -28,8 +28,8 @@ let package = Package(
         .target(
             name: "YAML Standard",
             dependencies: [
-                .product(name: "Graph Sequential Primitives", package: "swift-graph-primitives"),
-                .product(name: "Lexer Primitives", package: "swift-lexer-primitives"),
+                .product(name: "Graph Sequential", package: "swift-graph"),
+                .product(name: "Lexer", package: "swift-lexer"),
             ],
             path: "Sources/YAML Standard"
         ),
