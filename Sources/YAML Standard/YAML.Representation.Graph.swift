@@ -1,9 +1,10 @@
-public import Graph_Sequential
+public import Graph
+import Index
 
 extension YAML.Representation {
     public struct Graph: Sendable {
         public let root: Node.Identifier
-        private let storage: Graph_Sequential.Graph.Sequential<Node, Node>
+        private let storage: Graph::Graph.Sequential<Node, Node>
 
         public init(root: Node.Identifier, nodes: [Node]) throws(Error) {
             guard root.isValid(in: nodes) else { throw .invalidRoot(root) }
@@ -25,7 +26,7 @@ extension YAML.Representation {
                     else { throw .invalidReference }
                 }
             }
-            var builder = Graph_Sequential.Graph.Sequential<Node, Node>.Builder()
+            var builder = Graph::Graph.Sequential<Node, Node>.Builder()
             for node in nodes {
                 _ = builder.allocate(node)
             }

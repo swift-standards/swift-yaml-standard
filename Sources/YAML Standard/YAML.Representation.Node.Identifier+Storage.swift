@@ -1,4 +1,5 @@
-private import Graph_Sequential
+private import Graph
+private import Index
 
 extension YAML.Representation.Node.Identifier {
     package func isValid<Element>(in elements: [Element]) -> Bool {

@@ -1,4 +1,4 @@
-public import Graph_Sequential
+public import Graph
 
 extension YAML.Representation.Node {
     @frozen

@@ -1,5 +1,6 @@
-public import Graph_Sequential
+public import Graph
+public import Index
 
 extension YAML.Representation.Node {
-    public typealias Identifier = Graph_Sequential.Graph.Node<Self>
+    public typealias Identifier = Graph::Graph.Node<Self>
 }

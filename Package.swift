@@ -23,13 +23,18 @@ let package = Package(
             url: "https://github.com/swift-molecules/swift-lexer.git",
             branch: "main"
         ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-index.git",
+            branch: "main"
+        ),
     ],
     targets: [
         .target(
             name: "YAML Standard",
             dependencies: [
-                .product(name: "Graph Sequential", package: "swift-graph"),
+                .product(name: "Graph", package: "swift-graph"),
                 .product(name: "Lexer", package: "swift-lexer"),
+                .product(name: "Index", package: "swift-index"),
             ],
             path: "Sources/YAML Standard"
         ),

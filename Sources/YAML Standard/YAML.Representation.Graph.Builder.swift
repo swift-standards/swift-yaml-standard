@@ -1,4 +1,5 @@
-public import Graph_Sequential
+public import Graph
+import Index
 
 extension YAML.Representation.Graph {
     public struct Builder: Sendable {
