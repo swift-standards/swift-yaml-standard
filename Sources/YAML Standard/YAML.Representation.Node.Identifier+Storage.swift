@@ -1,3 +1,4 @@
+public import Tagged
 private import Graph
 private import Index
 

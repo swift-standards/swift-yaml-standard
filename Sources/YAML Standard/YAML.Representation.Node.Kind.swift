@@ -1,3 +1,4 @@
+public import Tagged
 public import Graph
 
 extension YAML.Representation.Node {

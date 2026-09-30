@@ -1,3 +1,4 @@
+public import Tagged
 extension YAML.Schema {
     @frozen
     public enum Identifier: Sendable, Equatable, Hashable {
