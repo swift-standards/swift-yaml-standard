@@ -1,9 +1,9 @@
 public import Tagged
-public import Graph
+import Graph
 
 extension YAML.Representation.Graph {
     @frozen
-    public enum Error: Swift.Error, Sendable, Equatable {
+    public enum Error: Swift::Error, Sendable, Equatable {
         case invalidRoot(YAML.Representation.Node.Identifier)
         case invalidReference
         case incompleteNode(YAML.Representation.Node.Identifier)

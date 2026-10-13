@@ -1,4 +1,4 @@
-public import Tagged
+import Tagged
 private import Graph
 private import Index
 
