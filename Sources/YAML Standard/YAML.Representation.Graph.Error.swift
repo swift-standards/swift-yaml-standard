@@ -1,5 +1,5 @@
-public import Tagged
 import Graph
+public import Tagged
 
 extension YAML.Representation.Graph {
     @frozen

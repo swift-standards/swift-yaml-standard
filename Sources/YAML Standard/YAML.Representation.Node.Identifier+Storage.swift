@@ -1,6 +1,6 @@
-import Tagged
 private import Graph
 private import Index
+import Tagged
 
 extension YAML.Representation.Node.Identifier {
     package func isValid<Element>(in elements: [Element]) -> Bool {

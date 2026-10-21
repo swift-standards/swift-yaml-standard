@@ -1,6 +1,6 @@
-public import Tagged
 import Graph
 import Index
+public import Tagged
 
 extension YAML.Representation.Graph {
     public struct Builder: Sendable {
