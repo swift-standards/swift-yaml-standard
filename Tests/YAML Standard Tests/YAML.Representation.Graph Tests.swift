@@ -1,7 +1,9 @@
 import Testing
 import YAML_Standard
 
-extension YAML.Representation.Graph {
+enum `YAML.Representation.Graph Tests` {}
+
+extension `YAML.Representation.Graph Tests` {
     @Suite struct Test {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
