@@ -27,6 +27,15 @@ extension YAML.Representation {
                     else { throw .invalidReference }
                 }
             }
+            for node in nodes {
+                guard case .mapping(let entries) = node.kind else { continue }
+                for (position, entry) in entries.enumerated() {
+                    for earlier in entries[..<position]
+                    where Self.equal(earlier.key, entry.key, in: nodes) {
+                        throw .duplicateKey(entry.key)
+                    }
+                }
+            }
             var builder = Graph::Graph.Sequential<Node, Node>.Builder()
             for node in nodes {
                 _ = builder.allocate(node)
@@ -34,6 +43,62 @@ extension YAML.Representation {
             self.root = root
             self.storage = builder.build()
         }
+    }
+}
+
+extension YAML.Representation.Graph {
+    private static func equal(
+        _ left: Node.Identifier,
+        _ right: Node.Identifier,
+        in nodes: [Node]
+    ) -> Bool {
+        var assumed: [(Node.Identifier, Node.Identifier)] = []
+        return equal(left, right, in: nodes, assuming: &assumed)
+    }
+
+    private static func equal(
+        _ left: Node.Identifier,
+        _ right: Node.Identifier,
+        in nodes: [Node],
+        assuming assumed: inout [(Node.Identifier, Node.Identifier)]
+    ) -> Bool {
+        if left == right || assumed.contains(where: { $0.0 == left && $0.1 == right }) {
+            return true
+        }
+        guard let first = left.value(in: nodes), let second = right.value(in: nodes),
+            first.tag == second.tag
+        else {
+            return false
+        }
+        let mark = assumed.count
+        assumed.append((left, right))
+        let result: Bool
+        switch (first.kind, second.kind) {
+        case (.scalar(let a), .scalar(let b)):
+            result = a == b
+
+        case (.sequence(let a), .sequence(let b)):
+            result =
+                a.count == b.count
+                && zip(a, b).allSatisfy { equal($0, $1, in: nodes, assuming: &assumed) }
+
+        case (.mapping(let a), .mapping(let b)):
+            result =
+                a.count == b.count
+                && a.allSatisfy { x in
+                    b.contains { y in
+                        equal(x.key, y.key, in: nodes, assuming: &assumed)
+                            && equal(x.value, y.value, in: nodes, assuming: &assumed)
+                    }
+                }
+
+        default:
+            result = false
+        }
+        if !result {
+            assumed.removeSubrange(mark...)
+        }
+        return result
     }
 }
 

@@ -8,5 +8,7 @@ extension YAML.Representation.Graph {
         case invalidReference
         case incompleteNode(YAML.Representation.Node.Identifier)
         case duplicateDefinition(YAML.Representation.Node.Identifier)
+        /// A mapping has two keys that are the same node, or equal nodes (YAML 1.2.2 §3.2.1.1).
+        case duplicateKey(YAML.Representation.Node.Identifier)
     }
 }

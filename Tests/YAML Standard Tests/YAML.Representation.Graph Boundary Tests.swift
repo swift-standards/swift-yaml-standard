@@ -84,5 +84,78 @@ extension `YAML.Representation.Graph Boundary Tests` {
             let graph = try builder.finalize(root: root)
             #expect(graph[root]?.kind == .mapping([.init(key: shared, value: shared)]))
         }
+
+        @Test
+        func `a mapping with the same key node twice is refused`() throws {
+            var builder = YAML.Representation.Graph.Builder()
+            let root = builder.reserve()
+            let key = builder.reserve()
+            let first = builder.reserve()
+            let second = builder.reserve()
+            try builder.define(key, as: Self.scalar("k"))
+            try builder.define(first, as: Self.scalar("1"))
+            try builder.define(second, as: Self.scalar("2"))
+            try builder.define(
+                root,
+                as: .init(tag: .mapping, kind: .mapping([.init(key: key, value: first), .init(key: key, value: second)]))
+            )
+            #expect(throws: YAML.Representation.Graph.Error.duplicateKey(key)) {
+                _ = try builder.finalize(root: root)
+            }
+        }
+
+        @Test
+        func `a mapping with two equal scalar keys is refused`() throws {
+            var builder = YAML.Representation.Graph.Builder()
+            let root = builder.reserve()
+            let a = builder.reserve()
+            let b = builder.reserve()
+            let value = builder.reserve()
+            try builder.define(a, as: Self.scalar("k"))
+            try builder.define(b, as: Self.scalar("k"))
+            try builder.define(value, as: Self.scalar("v"))
+            try builder.define(
+                root,
+                as: .init(tag: .mapping, kind: .mapping([.init(key: a, value: value), .init(key: b, value: value)]))
+            )
+            #expect(throws: YAML.Representation.Graph.Error.duplicateKey(b)) {
+                _ = try builder.finalize(root: root)
+            }
+        }
+
+        @Test
+        func `a mapping with two equal sequence keys is refused`() throws {
+            var builder = YAML.Representation.Graph.Builder()
+            let root = builder.reserve()
+            let item = builder.reserve()
+            let a = builder.reserve()
+            let b = builder.reserve()
+            try builder.define(item, as: Self.scalar("x"))
+            try builder.define(a, as: .init(tag: .sequence, kind: .sequence([item])))
+            try builder.define(b, as: .init(tag: .sequence, kind: .sequence([item])))
+            try builder.define(
+                root,
+                as: .init(tag: .mapping, kind: .mapping([.init(key: a, value: item), .init(key: b, value: item)]))
+            )
+            #expect(throws: YAML.Representation.Graph.Error.duplicateKey(b)) {
+                _ = try builder.finalize(root: root)
+            }
+        }
+
+        @Test
+        func `keys with equal text but different tags are distinct`() throws {
+            var builder = YAML.Representation.Graph.Builder()
+            let root = builder.reserve()
+            let a = builder.reserve()
+            let b = builder.reserve()
+            try builder.define(a, as: .init(tag: .string, kind: .scalar("1")))
+            try builder.define(b, as: .init(tag: .integer, kind: .scalar("1")))
+            try builder.define(
+                root,
+                as: .init(tag: .mapping, kind: .mapping([.init(key: a, value: a), .init(key: b, value: b)]))
+            )
+            let graph = try builder.finalize(root: root)
+            #expect(graph[root]?.kind == .mapping([.init(key: a, value: a), .init(key: b, value: b)]))
+        }
     }
 }
