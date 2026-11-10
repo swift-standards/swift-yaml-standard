@@ -48,19 +48,19 @@ extension YAML.Representation {
 
 extension YAML.Representation.Graph {
     private static func equal(
-        _ left: Node.Identifier,
-        _ right: Node.Identifier,
-        in nodes: [Node]
+        _ left: YAML.Representation.Node.Identifier,
+        _ right: YAML.Representation.Node.Identifier,
+        in nodes: [YAML.Representation.Node]
     ) -> Bool {
-        var assumed: [(Node.Identifier, Node.Identifier)] = []
+        var assumed: [(YAML.Representation.Node.Identifier, YAML.Representation.Node.Identifier)] = []
         return equal(left, right, in: nodes, assuming: &assumed)
     }
 
     private static func equal(
-        _ left: Node.Identifier,
-        _ right: Node.Identifier,
-        in nodes: [Node],
-        assuming assumed: inout [(Node.Identifier, Node.Identifier)]
+        _ left: YAML.Representation.Node.Identifier,
+        _ right: YAML.Representation.Node.Identifier,
+        in nodes: [YAML.Representation.Node],
+        assuming assumed: inout [(YAML.Representation.Node.Identifier, YAML.Representation.Node.Identifier)]
     ) -> Bool {
         if left == right || assumed.contains(where: { $0.0 == left && $0.1 == right }) {
             return true
