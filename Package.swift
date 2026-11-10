@@ -27,6 +27,10 @@ let package = Package(
             url: "https://github.com/swift-atoms/swift-index.git",
             branch: "main"
         ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-tagged.git",
+            branch: "main"
+        ),
     ],
     targets: [
         .target(
@@ -35,6 +39,7 @@ let package = Package(
                 .product(name: "Graph", package: "swift-graph"),
                 .product(name: "Lexer", package: "swift-lexer"),
                 .product(name: "Index", package: "swift-index"),
+                .product(name: "Tagged", package: "swift-tagged"),
             ],
             path: "Sources/YAML Standard"
         ),
